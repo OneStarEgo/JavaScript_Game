@@ -20,7 +20,7 @@ class Sprite {
         this.image = image
     }
     draw() {
-        c.drawImage(this.image, -515, -1000)
+        c.drawImage(this.image, this.position.x, this.position.y)
 
     }
 }
@@ -33,8 +33,24 @@ const background = new Sprite({
     image: image
 })
 
+const keys = {
+    w: {
+        pressed: false
+    },
+    a: {
+        pressed: false
+    },
+    s: {
+        pressed: false
+    },
+    d: {
+        pressed: false
+    }
+}
+
 function animate() {
     window.requestAnimationFrame(animate)
+    background.draw()
     c.drawImage(
       playerImage,
       0,
@@ -46,25 +62,46 @@ function animate() {
       playerImage.width / 4,
       playerImage.height
     )
+
+    if (keys.w.pressed) {
+        background.position.y = background.position.y +3
+    }
 }
 animate()
 
 
 window.addEventListener('keydown', (e) => {
-    console.log(e.key)
     switch (e.key) {
         case 'w':
-            console.log('pressed w key')
+            keys.w.pressed = true
             break
         case 'a':
-            console.log('pressed a key')
+            keys.a.pressed = true
             break
         case 's':
-            console.log('pressed s key')
+            keys.s.pressed = true
             break
         case 'd':
-            console.log('pressed d key')
+            keys.d.pressed = true
             break
-
     }
+    console.log(keys)
+})
+
+window.addEventListener('keyup', (e) => {
+    switch (e.key) {
+        case 'w':
+            keys.w.pressed = false
+            break
+        case 'a':
+            keys.a.pressed = false
+            break
+        case 's':
+            keys.s.pressed = false
+            break
+        case 'd':
+            keys.d.pressed = false
+            break
+    }
+    console.log(keys)
 })
